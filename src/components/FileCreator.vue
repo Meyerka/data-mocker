@@ -11,17 +11,10 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>
-            <input type="text" />
-          </td>
-          <td>
-            <input type="number" name="range" id />
-          </td>
-          <td>
-            <input type="number" name="range" id />
-          </td>
-        </tr>
+        <FieldRow />
+        <FieldRow />
+        <FieldRow />
+        <FieldRow />
       </tbody>
     </table>
     <div>Number of rows</div>
@@ -31,9 +24,12 @@
 </template>
 
 <script>
+import FieldRow from "./FieldRow.vue";
 export default {
   name: "FileCreator",
-  props: {},
+  components: {
+    FieldRow,
+  },
 };
 </script>
 
