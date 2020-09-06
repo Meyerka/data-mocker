@@ -1,7 +1,16 @@
 <template>
   <tr>
     <td>
-      <input type="text" />
+      <input type="text" id="fieldName" />
+    </td>
+    <td>
+      <select name="fieldType">
+        <option value>--Type--</option>
+        <option value="text">Text</option>
+        <option value="date">Date</option>
+        <option value="number">Number</option>
+        <option value="Duration"></option>
+      </select>
     </td>
     <td>
       <input type="number" name="range" id />
