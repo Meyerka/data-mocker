@@ -1,7 +1,8 @@
 <template>
   <div>
     <h1>Select fields</h1>
-
+    <button @click="addRow(1)">+</button>
+    <button @click="addRow(-1)">-</button>
     <table>
       <thead>
         <tr>
@@ -11,10 +12,7 @@
           <th>Unicity</th>
         </tr>
       </thead>
-      <tbody>
-        <FieldRow />
-        <FieldRow />
-        <FieldRow />
+      <tbody v-for="row in rowNumber" :key="row">
         <FieldRow />
       </tbody>
     </table>
@@ -46,6 +44,14 @@ export default {
   name: "FileCreator",
   components: {
     FieldRow,
+  },
+  data: () => ({
+    rowNumber: 4,
+  }),
+  methods: {
+    addRow(rows) {
+      this.rowNumber += rows;
+    },
   },
 };
 </script>
