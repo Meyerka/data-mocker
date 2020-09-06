@@ -1,10 +1,10 @@
 <template>
   <tr>
     <td>
-      <input type="text" id="fieldName" />
+      <input type="text" v-model="field.name" />
     </td>
     <td>
-      <select name="fieldType">
+      <select v-model="field.type">
         <option value>--Type--</option>
         <option value="text">Text</option>
         <option value="date">Date</option>
@@ -13,10 +13,10 @@
       </select>
     </td>
     <td>
-      <input type="number" name="range" id />
+      <input type="number" v-model="field.range" id />
     </td>
     <td>
-      <input type="number" name="range" id />
+      <input type="range" min="0" max="100" value="50" v-model="field.unicity" />
     </td>
   </tr>
 </template>
@@ -24,7 +24,14 @@
 <script>
 export default {
   name: "FieldRow",
-  props: {},
+  data: () => ({
+    field: {
+      name: "",
+      type: "",
+      range: "",
+      unicity: 50,
+    },
+  }),
 };
 </script>
 
