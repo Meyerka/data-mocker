@@ -71,31 +71,38 @@ export default {
       let generatedRow = {};
       generatedRow.name = this.field.name;
       if (this.field.type === "date") {
-        generatedRow.value = this.getRandomDate(
+        generatedRow.value = this.getRandomDateBetween(
           this.field.range.content.to,
           this.field.range.content.from
+        );
+      } else if (this.field.type === "number") {
+        generatedRow.value = Math.round(
+          this.getRandomValueBetween(
+            this.field.range.content.from,
+            this.field.range.content.to
+          )
         );
       }
       console.log(generatedRow);
       return generatedRow;
     },
 
-    getRandomDate(date1, date2) {
+    getRandomDateBetween(date1, date2) {
       date1 = date1 || "01-01-1970";
       date2 = date2 || new Date().toLocaleDateString();
       date1 = new Date(date1).getTime();
       date2 = new Date(date2).getTime();
       if (date1 > date2) {
         return new Date(
-          this.randomValueBetween(date2, date1)
+          this.getRandomValueBetween(date2, date1)
         ).toLocaleDateString();
       } else {
         return new Date(
-          this.randomValueBetween(date1, date2)
+          this.getRandomValueBetween(date1, date2)
         ).toLocaleDateString();
       }
     },
-    randomValueBetween(min, max) {
+    getRandomValueBetween(min, max) {
       return Math.random() * (max - min) + min;
     },
   },
