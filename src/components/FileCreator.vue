@@ -8,7 +8,8 @@
         <tr>
           <th>Field name</th>
           <th>Type</th>
-          <th>Range</th>
+          <th>Range type</th>
+          <th>Range content</th>
           <th>Unicity</th>
         </tr>
       </thead>
