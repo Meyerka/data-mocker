@@ -70,25 +70,29 @@ export default {
     generateObject() {
       let generatedRow = {};
       generatedRow.name = this.field.name;
-      switch (this.field.type) {
-        case "date":
-          generatedRow.value = this.getRandomDateBetween(
-            this.field.range.content.to,
-            this.field.range.content.from
-          );
-          break;
-        case "number":
-          generatedRow.value = Math.round(
-            this.getRandomValueBetween(
-              this.field.range.content.from,
-              this.field.range.content.to
-            )
-          );
-          break;
-        default:
-          break;
+      if (this.field.range.type === "list") {
+        let values = this.field.range.content.list.split(";");
+        generatedRow.value = values[Math.floor(Math.random() * values.length)];
+      } else {
+        switch (this.field.type) {
+          case "date":
+            generatedRow.value = this.getRandomDateBetween(
+              this.field.range.content.to,
+              this.field.range.content.from
+            );
+            break;
+          case "number":
+            generatedRow.value = Math.round(
+              this.getRandomValueBetween(
+                this.field.range.content.from,
+                this.field.range.content.to
+              )
+            );
+            break;
+          default:
+            break;
+        }
       }
-
       console.log(generatedRow);
       return generatedRow;
     },
