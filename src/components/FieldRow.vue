@@ -43,6 +43,7 @@
     <td>
       <input type="range" min="0" max="100" value="50" v-model="field.unicity" />
     </td>
+    <button @click="generateObject()">GENERATE!</button>
   </tr>
 </template>
 
@@ -65,6 +66,39 @@ export default {
       unicity: 50,
     },
   }),
+  methods: {
+    generateObject() {
+      let generatedRow = {};
+      generatedRow.name = this.field.name;
+      if (this.field.type === "date") {
+        generatedRow.value = this.getRandomDate(
+          this.field.range.content.to,
+          this.field.range.content.from
+        );
+      }
+      console.log(generatedRow);
+      return generatedRow;
+    },
+
+    getRandomDate(date1, date2) {
+      date1 = date1 || "01-01-1970";
+      date2 = date2 || new Date().toLocaleDateString();
+      date1 = new Date(date1).getTime();
+      date2 = new Date(date2).getTime();
+      if (date1 > date2) {
+        return new Date(
+          this.randomValueBetween(date2, date1)
+        ).toLocaleDateString();
+      } else {
+        return new Date(
+          this.randomValueBetween(date1, date2)
+        ).toLocaleDateString();
+      }
+    },
+    randomValueBetween(min, max) {
+      return Math.random() * (max - min) + min;
+    },
+  },
 };
 </script>
 
