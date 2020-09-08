@@ -60,6 +60,9 @@
 <script>
 export default {
   name: "FieldRow",
+  props: {
+    records: String,
+  },
   data: () => ({
     field: {
       name: "",
@@ -111,9 +114,7 @@ export default {
               this.field.range.content.to,
               ":"
             );
-            console.log(
-              this.getRandomValueBetween(fromTimeInMinutes, toTimeInMinutes)
-            );
+
             generatedRow.value = this.minutesToHours(
               Math.floor(
                 this.getRandomValueBetween(fromTimeInMinutes, toTimeInMinutes)
@@ -125,8 +126,10 @@ export default {
           default:
             break;
         }
+        this.record = this.generateObject;
       }
       console.log(generatedRow);
+      this.$emit("update-records", generatedRow);
       return generatedRow;
     },
 

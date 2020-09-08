@@ -14,7 +14,7 @@
         </tr>
       </thead>
       <tbody v-for="row in rowNumber" :key="row">
-        <FieldRow />
+        <FieldRow v-model="records" @update-records="update" />
       </tbody>
     </table>
 
@@ -36,6 +36,7 @@
         <option value="tab">Tab</option>
       </select>
     </div>
+    {{records}}
   </div>
 </template>
 
@@ -47,11 +48,15 @@ export default {
     FieldRow,
   },
   data: () => ({
-    rowNumber: 4,
+    rowNumber: 2,
+    records: {},
   }),
   methods: {
     addRow(rows) {
       this.rowNumber += rows;
+    },
+    update(record) {
+      this.records = record;
     },
   },
 };
