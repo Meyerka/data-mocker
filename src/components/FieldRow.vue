@@ -9,7 +9,7 @@
         <option value="text">Text</option>
         <option value="date">Date</option>
         <option value="number">Number</option>
-        <option value="Duration"></option>
+        <option value="Duration">Duration</option>
       </select>
     </td>
     <td>
@@ -17,16 +17,17 @@
         <option value>--Range--</option>
         <option value="random">Randomly generated</option>
         <option value="list">List</option>
+        <option v-if="field.type === 'date' || field.type === 'number'" value="range">Range</option>
       </select>
     </td>
     <td>
-      <div v-if="field.type === 'date'" id="dateRange">
+      <div v-if="field.type === 'date' && field.range.type === 'range'" id="dateRange">
         From
         <input type="date" name="from" v-model="field.range.content.from" />
         To
         <input type="date" name="to" v-model="field.range.content.to" />
       </div>
-      <div v-else-if="field.type === 'number'" id="numberRange">
+      <div v-else-if="field.type === 'number' && field.range.type === 'range'" id="numberRange">
         From
         <input type="number" name="from" v-model="field.range.content.from" />
         To
