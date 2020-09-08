@@ -9,7 +9,7 @@
         <option value="text">Text</option>
         <option value="date">Date</option>
         <option value="number">Number</option>
-        <option value="Duration">Duration</option>
+        <option value="duration">Duration</option>
       </select>
     </td>
     <td>
@@ -17,7 +17,10 @@
         <option value>--Range--</option>
         <option value="random">Randomly generated</option>
         <option value="list">List</option>
-        <option v-if="field.type === 'date' || field.type === 'number'" value="range">Range</option>
+        <option
+          v-if="field.type === 'date' || field.type === 'number' || field.type === 'duration'"
+          value="range"
+        >Range</option>
       </select>
     </td>
     <td>
@@ -27,10 +30,16 @@
         To
         <input type="date" name="to" v-model="field.range.content.to" />
       </div>
+      <div v-else-if="field.type === 'duration' && field.range.type === 'range'" id="dateRange">
+        Between
+        <input type="time" name="from" v-model="field.range.content.from" />
+        And
+        <input type="time" name="to" v-model="field.range.content.to" />
+      </div>
       <div v-else-if="field.type === 'number' && field.range.type === 'range'" id="numberRange">
-        From
+        Between
         <input type="number" name="from" v-model="field.range.content.from" />
-        To
+        And
         <input type="number" name="to" v-model="field.range.content.to" />
       </div>
       <input type="text" v-model="field.range.content.list" v-else-if="field.range.type === 'list'" />
@@ -72,9 +81,12 @@ export default {
       let generatedRow = {};
       generatedRow.name = this.field.name;
       if (this.field.range.type === "list") {
-        let values = this.field.range.content.list.split(";");
-        generatedRow.value = values[Math.floor(Math.random() * values.length)];
+        let valuesFromList = this.field.range.content.list.split(";");
+        generatedRow.value =
+          valuesFromList[Math.floor(Math.random() * valuesFromList.length)];
       } else {
+        let fromTimeInMinutes;
+        let toTimeInMinutes;
         switch (this.field.type) {
           case "date":
             generatedRow.value = this.getRandomDateBetween(
@@ -83,12 +95,32 @@ export default {
             );
             break;
           case "number":
-            generatedRow.value = Math.round(
+            generatedRow.value = Math.floor(
               this.getRandomValueBetween(
                 this.field.range.content.from,
                 this.field.range.content.to
               )
             );
+            break;
+          case "duration":
+            fromTimeInMinutes = this.hoursToMinutes(
+              this.field.range.content.from,
+              ":"
+            );
+            toTimeInMinutes = this.hoursToMinutes(
+              this.field.range.content.to,
+              ":"
+            );
+            console.log(
+              this.getRandomValueBetween(fromTimeInMinutes, toTimeInMinutes)
+            );
+            generatedRow.value = this.minutesToHours(
+              Math.floor(
+                this.getRandomValueBetween(fromTimeInMinutes, toTimeInMinutes)
+              ),
+              ":"
+            );
+
             break;
           default:
             break;
@@ -115,6 +147,19 @@ export default {
     },
     getRandomValueBetween(min, max) {
       return Math.random() * (max - min) + min;
+    },
+    hoursToMinutes(hours, separator) {
+      return (
+        parseInt(hours.split(separator)[0] * 60) +
+        parseInt(hours.split(separator)[1])
+      );
+    },
+    minutesToHours(minutes, separator) {
+      let hourPart = "00" + Math.floor(minutes / 60);
+      let minutePart = "00" + (minutes % 60);
+      hourPart = hourPart.slice(hourPart.length - 2);
+      minutePart = minutePart.slice(minutePart.length - 2);
+      return hourPart + separator + minutePart;
     },
   },
 };
