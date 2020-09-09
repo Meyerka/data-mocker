@@ -22,7 +22,14 @@
         />
       </tbody>
     </table>
-
+    <div>
+      Nom du fichier
+      <input type="text" v-model="fileName" @keyup="validateFileName" />
+      <select v-model="fileExtension">
+        <option value="csv">.csv</option>
+        <option value="txt">.txt</option>
+      </select>
+    </div>
     <div>
       Number of rows
       <input type="number" v-model="rowNumber" />
@@ -41,7 +48,7 @@
         <option value="tab">Tab</option>
       </select>
     </div>
-    {{dataGrid}}
+
     <button @click="generateGrid()">Generate grid</button>
     <button @click="downloadCsv()">Generate csv file</button>
   </div>
@@ -58,6 +65,8 @@ export default {
     fieldNumber: 2,
     dataGrid: [],
     rowNumber: 1,
+    fileName: "file name",
+    fileExtension: "csv",
   }),
   methods: {
     addField(number) {
@@ -85,7 +94,7 @@ export default {
       let encodedUri = encodeURI(csvContent);
       var link = document.createElement("a");
       link.setAttribute("href", encodedUri);
-      link.setAttribute("download", "my_data.csv");
+      link.setAttribute("download", `${this.fileName}.${this.fileExtension}`);
       document.body.appendChild(link);
 
       link.click();
@@ -93,6 +102,18 @@ export default {
     generateGrid() {
       for (let i = 0; i < this.fieldNumber; i++) {
         this.$refs.child[i].generateObject();
+      }
+    },
+    validateFileName() {
+      var rg1 = /^[^\\/:*?"<>|]+$/; // forbidden characters \ / : * ? " < > |
+      var rg2 = /^\./; // cannot start with dot (.)
+      var rg3 = /^(nul|prn|con|lpt[0-9]|com[0-9])(\.|$)/i; // forbidden file names
+      if (
+        !rg1.test(this.fileName) ||
+        rg2.test(this.fileName) ||
+        rg3.test(this.fileName)
+      ) {
+        alert("Forbidden character in file name");
       }
     },
   },
