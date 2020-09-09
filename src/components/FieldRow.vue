@@ -53,7 +53,7 @@
     <td>
       <input type="range" min="0" max="100" value="50" v-model="field.unicity" />
     </td>
-    <button @click="generateObject()">GENERATE!</button>
+    <button @click="generateObject()">GENERATE {{this.rowNumber}} lines !</button>
   </tr>
 </template>
 
@@ -62,6 +62,7 @@ export default {
   name: "FieldRow",
   props: {
     records: String,
+    rowNumber: Number,
   },
   data: () => ({
     field: {

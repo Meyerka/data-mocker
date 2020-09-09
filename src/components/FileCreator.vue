@@ -1,8 +1,8 @@
 <template>
   <div>
     <h1>Select fields</h1>
-    <button @click="addRow(1)">+</button>
-    <button @click="addRow(-1)">-</button>
+    <button @click="addField(1)">+</button>
+    <button @click="addField(-1)">-</button>
     <table>
       <thead>
         <tr>
@@ -13,14 +13,14 @@
           <th>Unicity</th>
         </tr>
       </thead>
-      <tbody v-for="row in rowNumber" :key="row">
-        <FieldRow v-model="records" @update-records="update" />
+      <tbody v-for="field in fieldNumber" :key="field">
+        <FieldRow v-model="records" :rowNumber="rowNumber" @update-records="update" />
       </tbody>
     </table>
 
     <div>
       Number of rows
-      <input type="number" name="rowNumber" />
+      <input type="number" v-model="rowNumber" />
     </div>
 
     <div>
@@ -49,20 +49,21 @@ export default {
     FieldRow,
   },
   data: () => ({
-    rowNumber: 2,
+    fieldNumber: 2,
     records: {},
+    rowNumber: 1,
   }),
   methods: {
-    addRow(rows) {
-      this.rowNumber += rows;
+    addField(number) {
+      this.fieldNumber += number;
     },
     update(record) {
       this.records = record;
     },
     downloadCsv() {
       const rows = [
-        ["name1", "city1", "some other info"],
-        ["name2", "city2", "more info"],
+        [this.records.name, "column2", "column3"],
+        [this.records.value, "city2", "more info"],
       ];
 
       let csvContent = "data:text/csv;charset=utf-8,";
