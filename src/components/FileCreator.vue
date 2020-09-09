@@ -71,12 +71,14 @@ export default {
       this.dataGrid.forEach(function (field) {
         csvContent += field.name + ";";
       });
+      csvContent = csvContent.substring(0, csvContent.length - 1);
       csvContent += "\r\n";
 
       for (let row = 0; row < this.rowNumber; row++) {
         this.dataGrid.forEach(function (field) {
           csvContent += field.values[row] + ";";
         });
+        csvContent = csvContent.substring(0, csvContent.length - 1);
         csvContent += "\r\n";
       }
 
