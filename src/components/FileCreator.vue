@@ -14,7 +14,7 @@
         </tr>
       </thead>
       <tbody v-for="field in fieldNumber" :key="field">
-        <FieldRow v-model="records" :rowNumber="rowNumber" @update-records="update" />
+        <FieldRow v-model="dataGrid" :rowNumber="rowNumber" @update-records="updateGrid" />
       </tbody>
     </table>
 
@@ -36,7 +36,7 @@
         <option value="tab">Tab</option>
       </select>
     </div>
-    {{records}}
+    {{dataGrid}}
     <button @click="downloadCsv()">Generate csv file</button>
   </div>
 </template>
@@ -50,15 +50,15 @@ export default {
   },
   data: () => ({
     fieldNumber: 2,
-    records: {},
+    dataGrid: [],
     rowNumber: 1,
   }),
   methods: {
     addField(number) {
       this.fieldNumber += number;
     },
-    update(record) {
-      this.records = record;
+    updateGrid(records) {
+      this.dataGrid.push(records);
     },
     downloadCsv() {
       const rows = [

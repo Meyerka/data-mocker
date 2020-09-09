@@ -61,7 +61,7 @@
 export default {
   name: "FieldRow",
   props: {
-    records: String,
+    dataGrid: [],
     rowNumber: Number,
   },
   data: () => ({
@@ -79,59 +79,71 @@ export default {
       },
       unicity: 50,
     },
+    records: { name: "", values: [] },
   }),
   methods: {
     generateObject() {
-      let generatedRow = {};
-      generatedRow.name = this.field.name;
-      if (this.field.range.type === "list") {
-        let valuesFromList = this.field.range.content.list.split(";");
-        generatedRow.value =
-          valuesFromList[Math.floor(Math.random() * valuesFromList.length)];
-      } else {
-        let fromTimeInMinutes;
-        let toTimeInMinutes;
-        switch (this.field.type) {
-          case "date":
-            generatedRow.value = this.getRandomDateBetween(
-              this.field.range.content.to,
-              this.field.range.content.from
-            );
-            break;
-          case "number":
-            generatedRow.value = Math.floor(
-              this.getRandomValueBetween(
+      this.records.name = this.field.name;
+      for (let i = 0; i < this.rowNumber; i++) {
+        if (this.field.range.type === "list") {
+          let valuesFromList = this.field.range.content.list.split(";");
+          this.records.values.push(
+            valuesFromList[Math.floor(Math.random() * valuesFromList.length)]
+          );
+        } else {
+          let fromTimeInMinutes;
+          let toTimeInMinutes;
+          switch (this.field.type) {
+            case "date":
+              this.records.values.push(
+                this.getRandomDateBetween(
+                  this.field.range.content.to,
+                  this.field.range.content.from
+                )
+              );
+              break;
+            case "number":
+              this.records.values.push(
+                Math.floor(
+                  this.getRandomValueBetween(
+                    this.field.range.content.from,
+                    this.field.range.content.to
+                  )
+                )
+              );
+              break;
+            case "duration":
+              fromTimeInMinutes = this.hoursToMinutes(
                 this.field.range.content.from,
-                this.field.range.content.to
-              )
-            );
-            break;
-          case "duration":
-            fromTimeInMinutes = this.hoursToMinutes(
-              this.field.range.content.from,
-              ":"
-            );
-            toTimeInMinutes = this.hoursToMinutes(
-              this.field.range.content.to,
-              ":"
-            );
+                ":"
+              );
+              toTimeInMinutes = this.hoursToMinutes(
+                this.field.range.content.to,
+                ":"
+              );
 
-            generatedRow.value = this.minutesToHours(
-              Math.floor(
-                this.getRandomValueBetween(fromTimeInMinutes, toTimeInMinutes)
-              ),
-              ":"
-            );
+              this.records.values.push(
+                this.minutesToHours(
+                  Math.floor(
+                    this.getRandomValueBetween(
+                      fromTimeInMinutes,
+                      toTimeInMinutes
+                    )
+                  ),
+                  ":"
+                )
+              );
 
-            break;
-          default:
-            break;
+              break;
+            default:
+              break;
+          }
         }
         this.record = this.generateObject;
       }
-      console.log(generatedRow);
-      this.$emit("update-records", generatedRow);
-      return generatedRow;
+      console.log(this.records);
+      this.$emit("update-records", this.records);
+      return this.records;
     },
 
     getRandomDateBetween(date1, date2) {
