@@ -14,7 +14,12 @@
         </tr>
       </thead>
       <tbody v-for="field in fieldNumber" :key="field">
-        <FieldRow v-model="dataGrid" :rowNumber="rowNumber" @update-records="updateGrid" />
+        <FieldRow
+          v-model="dataGrid"
+          :rowNumber="rowNumber"
+          @update-records="updateGrid"
+          ref="child"
+        />
       </tbody>
     </table>
 
@@ -37,6 +42,7 @@
       </select>
     </div>
     {{dataGrid}}
+    <button @click="generateGrid()">Generate grid</button>
     <button @click="downloadCsv()">Generate csv file</button>
   </div>
 </template>
@@ -76,9 +82,14 @@ export default {
       var link = document.createElement("a");
       link.setAttribute("href", encodedUri);
       link.setAttribute("download", "my_data.csv");
-      document.body.appendChild(link); // Required for FF
+      document.body.appendChild(link);
 
       link.click();
+    },
+    generateGrid() {
+      for (let i = 0; i < this.fieldNumber; i++) {
+        this.$refs.child[i].generateObject();
+      }
     },
   },
 };
