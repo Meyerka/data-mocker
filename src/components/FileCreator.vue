@@ -67,17 +67,19 @@ export default {
       this.dataGrid.push(records);
     },
     downloadCsv() {
-      const rows = [
-        [this.records.name, "column2", "column3"],
-        [this.records.value, "city2", "more info"],
-      ];
-
       let csvContent = "data:text/csv;charset=utf-8,";
-
-      rows.forEach(function (rowArray) {
-        let row = rowArray.join(",");
-        csvContent += row + "\r\n";
+      this.dataGrid.forEach(function (field) {
+        csvContent += field.name + ";";
       });
+      csvContent += "\r\n";
+
+      for (let row = 0; row < this.rowNumber; row++) {
+        this.dataGrid.forEach(function (field) {
+          csvContent += field.values[row] + ";";
+        });
+        csvContent += "\r\n";
+      }
+
       let encodedUri = encodeURI(csvContent);
       var link = document.createElement("a");
       link.setAttribute("href", encodedUri);
