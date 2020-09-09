@@ -37,15 +37,13 @@
 
     <div>
       Include header
-      <input type="checkbox" name="isHeaderIncluded" />
+      <input type="checkbox" v-model="isHeaderIncluded" />
     </div>
     <div>
       Field seperator
-      <select name="fieldSeparator">
-        <option value>--Please choose an option--</option>
-        <option value="semicolon">Semicolon ;</option>
-        <option value="comma">Comma ,</option>
-        <option value="tab">Tab</option>
+      <select v-model="fieldSeparator">
+        <option value=";">Semicolon ;</option>
+        <option value=",">Comma ,</option>
       </select>
     </div>
 
@@ -67,6 +65,8 @@ export default {
     rowNumber: 1,
     fileName: "file name",
     fileExtension: "csv",
+    isHeaderIncluded: true,
+    fieldSeparator: ";",
   }),
   methods: {
     addField(number) {
@@ -77,15 +77,18 @@ export default {
     },
     downloadCsv() {
       let csvContent = "data:text/csv;charset=utf-8,";
-      this.dataGrid.forEach(function (field) {
-        csvContent += field.name + ";";
-      });
-      csvContent = csvContent.substring(0, csvContent.length - 1);
-      csvContent += "\r\n";
+      const sep = this.fieldSeparator;
+      if (this.isHeaderIncluded) {
+        this.dataGrid.forEach(function (field) {
+          csvContent += field.name + sep;
+        });
+        csvContent = csvContent.substring(0, csvContent.length - 1);
+        csvContent += "\r\n";
+      }
 
       for (let row = 0; row < this.rowNumber; row++) {
         this.dataGrid.forEach(function (field) {
-          csvContent += field.values[row] + ";";
+          csvContent += field.values[row] + sep;
         });
         csvContent = csvContent.substring(0, csvContent.length - 1);
         csvContent += "\r\n";
