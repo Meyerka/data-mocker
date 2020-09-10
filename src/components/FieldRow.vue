@@ -83,61 +83,10 @@ export default {
   methods: {
     generateObject() {
       this.records.name = this.field.name;
-      for (let i = 0; i < this.rowNumber; i++) {
-        if (this.field.range.type === "list") {
-          let valuesFromList = this.field.range.content.list.split(";");
-          this.records.values.push(
-            valuesFromList[Math.floor(Math.random() * valuesFromList.length)]
-          );
-        } else {
-          let fromTimeInMinutes;
-          let toTimeInMinutes;
-          switch (this.field.type) {
-            case "date":
-              this.records.values.push(
-                this.getRandomDateBetween(
-                  this.field.range.content.to,
-                  this.field.range.content.from
-                )
-              );
-              break;
-            case "number":
-              this.records.values.push(
-                Math.floor(
-                  this.getRandomValueBetween(
-                    this.field.range.content.from,
-                    this.field.range.content.to
-                  )
-                )
-              );
-              break;
-            case "duration":
-              fromTimeInMinutes = this.hoursToMinutes(
-                this.field.range.content.from,
-                ":"
-              );
-              toTimeInMinutes = this.hoursToMinutes(
-                this.field.range.content.to,
-                ":"
-              );
+      const uniqueValues = this.rowNumber / this.unicity;
+      for (let i = 0; i < uniqueValues; i++) {
+        this.generateValue();
 
-              this.records.values.push(
-                this.minutesToHours(
-                  Math.floor(
-                    this.getRandomValueBetween(
-                      fromTimeInMinutes,
-                      toTimeInMinutes
-                    )
-                  ),
-                  ":"
-                )
-              );
-
-              break;
-            default:
-              break;
-          }
-        }
         this.record = this.generateObject;
       }
       console.log(this.records);
@@ -175,6 +124,52 @@ export default {
       hourPart = hourPart.slice(hourPart.length - 2);
       minutePart = minutePart.slice(minutePart.length - 2);
       return hourPart + separator + minutePart;
+    },
+
+    generateValue(type, rangeType) {
+      if (rangeType === "list") {
+        let valuesFromList = this.field.range.content.list.split(";");
+        return valuesFromList[
+          Math.floor(Math.random() * valuesFromList.length)
+        ];
+      } else {
+        let fromTimeInMinutes;
+        let toTimeInMinutes;
+        switch (type) {
+          case "date":
+            return this.getRandomDateBetween(
+              this.field.range.content.to,
+              this.field.range.content.from
+            );
+          case "number":
+            return Math.floor(
+              this.getRandomValueBetween(
+                this.field.range.content.from,
+                this.field.range.content.to
+              )
+            );
+          case "duration":
+            fromTimeInMinutes = this.hoursToMinutes(
+              this.field.range.content.from,
+              ":"
+            );
+            toTimeInMinutes = this.hoursToMinutes(
+              this.field.range.content.to,
+              ":"
+            );
+
+            return this.minutesToHours(
+              Math.floor(
+                this.getRandomValueBetween(fromTimeInMinutes, toTimeInMinutes)
+              ),
+              ":"
+            );
+
+          default:
+            console.log("failed to generate random value based on the input");
+            break;
+        }
+      }
     },
   },
 };
