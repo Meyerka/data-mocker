@@ -1,5 +1,6 @@
 <template>
   <div>
+    <button @click="seedData()">Seed data for test</button>
     <h1>Select fields</h1>
     <button @click="addField(1)">+</button>
     <button @click="addField(-1)">-</button>
@@ -60,7 +61,7 @@ export default {
     FieldRow,
   },
   data: () => ({
-    fieldNumber: 2,
+    fieldNumber: 3,
     dataGrid: [],
     rowNumber: 1,
     fileName: "file name",
@@ -118,6 +119,25 @@ export default {
       ) {
         alert("Forbidden character in file name");
       }
+    },
+    seedData() {
+      this.$refs.child[0].field.name = "Matricule";
+      this.$refs.child[0].field.type = "number";
+      this.$refs.child[0].field.range.type = "range";
+      this.$refs.child[0].field.range.content.from = 0;
+      this.$refs.child[0].field.range.content.to = 1000;
+
+      this.$refs.child[1].field.name = "Nom";
+      this.$refs.child[1].field.type = "text";
+      this.$refs.child[1].field.range.type = "list";
+      this.$refs.child[1].field.range.content.list =
+        "Karl;Mathie;Jean;Marc;Pierre";
+
+      this.$refs.child[2].field.name = "N° badge";
+      this.$refs.child[2].field.type = "number";
+      this.$refs.child[2].field.range.type = "range";
+      this.$refs.child[2].field.range.content.from = 10000;
+      this.$refs.child[2].field.range.content.to = 1000000;
     },
   },
 };
