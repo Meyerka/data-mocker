@@ -83,12 +83,21 @@ export default {
   methods: {
     generateObject() {
       this.records.name = this.field.name;
-      const uniqueValues = this.rowNumber / this.unicity;
+      let valuesPool = [];
+      const uniqueValues = Math.ceil(
+        (parseInt(this.rowNumber) * this.field.unicity) / 100
+      );
       for (let i = 0; i < uniqueValues; i++) {
-        this.generateValue();
-
-        this.record = this.generateObject;
+        valuesPool.push(
+          this.generateValue(this.field.type, this.field.range.type)
+        );
       }
+      for (let j = 0; j < this.rowNumber; j++) {
+        const randomValueFromPool =
+          valuesPool[Math.floor(Math.random() * valuesPool.length)];
+        this.records.values.push(randomValueFromPool);
+      }
+
       console.log(this.records);
       this.$emit("update-records", this.records);
       return this.records;
