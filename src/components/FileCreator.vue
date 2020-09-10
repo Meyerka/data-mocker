@@ -12,6 +12,7 @@
           <th>Range type</th>
           <th>Range content</th>
           <th>Unicity</th>
+          <th>Group</th>
         </tr>
       </thead>
       <tbody v-for="field in fieldNumber" :key="field">
@@ -107,6 +108,7 @@ export default {
       for (let i = 0; i < this.fieldNumber; i++) {
         this.$refs.child[i].generateObject();
       }
+      this.alignGroupedFields();
     },
     validateFileName() {
       var rg1 = /^[^\\/:*?"<>|]+$/; // forbidden characters \ / : * ? " < > |
@@ -138,6 +140,48 @@ export default {
       this.$refs.child[2].field.range.type = "range";
       this.$refs.child[2].field.range.content.from = 10000;
       this.$refs.child[2].field.range.content.to = 1000000;
+    },
+    // TODO - refactor this mess
+    alignGroupedFields() {
+      //build the list of field indexes to group
+      let groupedFieldsKeys = [];
+      for (let i = 0; i < this.dataGrid.length; i++) {
+        if (this.dataGrid[i].isGrouped) {
+          groupedFieldsKeys.push(i);
+        }
+      }
+      //consider first grouped field as key for lining up grouped fields and filter out unique values
+      const uniqueValues = this.dataGrid[groupedFieldsKeys[0]].values.filter(
+        (v, i, a) => a.indexOf(v) === i
+      );
+      //build mapping table to map unique key values to other fields' values
+      let mappingTable = [];
+      mappingTable.push([]);
+
+      mappingTable[0].push(uniqueValues);
+      console.log(mappingTable);
+
+      const keyField = groupedFieldsKeys[0];
+      for (let i = 1; i < groupedFieldsKeys.length; i++) {
+        const fieldIndex = groupedFieldsKeys[i];
+        mappingTable.push([]);
+        for (const val of uniqueValues) {
+          mappingTable[i].push(
+            this.dataGrid[fieldIndex].values[
+              this.dataGrid[keyField].values.indexOf(val)
+            ]
+          );
+        }
+      }
+
+      for (let row = 0; row < this.dataGrid[0].values.length; row++) {
+        const lookUpValue = this.dataGrid[0].values[row];
+        for (let j = 1; j < groupedFieldsKeys.length; j++) {
+          const fieldIndex = groupedFieldsKeys[j];
+          this.dataGrid[fieldIndex].values[row] =
+            mappingTable[j][uniqueValues.indexOf(lookUpValue)];
+        }
+      }
     },
   },
 };

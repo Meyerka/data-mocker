@@ -53,6 +53,9 @@
     <td>
       <input type="range" min="0" max="100" value="50" v-model="field.unicity" />
     </td>
+    <td v-for="checkbox in checkboxes" :key="checkbox">
+      <input type="checkbox" v-model="isGrouped" />
+    </td>
   </tr>
 </template>
 
@@ -79,10 +82,13 @@ export default {
       unicity: 50,
     },
     records: { name: "", values: [] },
+    checkboxes: 1,
+    isGrouped: false,
   }),
   methods: {
     generateObject() {
       this.records.name = this.field.name;
+      this.records.isGrouped = this.isGrouped;
       let valuesPool = [];
       const uniqueValues = Math.ceil(
         (parseInt(this.rowNumber) * this.field.unicity) / 100
@@ -98,7 +104,6 @@ export default {
         this.records.values.push(randomValueFromPool);
       }
 
-      console.log(this.records);
       this.$emit("update-records", this.records);
       return this.records;
     },
