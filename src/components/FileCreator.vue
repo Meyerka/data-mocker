@@ -16,7 +16,7 @@
       <tbody v-for="field in fieldNumber" :key="field">
         <FieldRow
           v-model="dataGrid"
-          :rowNumber="rowNumber"
+          :rowNumber="parseInt(rowNumber)"
           @update-records="updateGrid"
           ref="child"
         />

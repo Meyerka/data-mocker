@@ -61,7 +61,7 @@ export default {
   name: "FieldRow",
   props: {
     dataGrid: [],
-    rowNumber: Number,
+    rowNumber: { type: Number },
   },
   data: () => ({
     field: {
