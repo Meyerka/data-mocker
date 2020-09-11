@@ -159,7 +159,6 @@ export default {
       mappingTable.push([]);
 
       mappingTable[0].push(uniqueValues);
-      console.log(mappingTable);
 
       const keyField = groupedFieldsKeys[0];
       for (let i = 1; i < groupedFieldsKeys.length; i++) {
