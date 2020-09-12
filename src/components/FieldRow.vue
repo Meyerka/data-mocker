@@ -45,8 +45,11 @@
       <input type="text" v-model="field.range.content.list" v-else-if="field.range.type === 'list'" />
       <select v-model="field.range.content.api" v-else-if="field.range.type === 'random'">
         <option value>--Dataset--</option>
-        <option value="name">Name</option>
+        <option value="fullName">Full Name</option>
+        <option value="email">E-mail address</option>
         <option value="city">City</option>
+        <option value="department">Department</option>
+        <option value="company">Company</option>
         <option value="job">Job</option>
       </select>
     </td>
@@ -150,6 +153,19 @@ export default {
         return valuesFromList[
           Math.floor(Math.random() * valuesFromList.length)
         ];
+      } else if (rangeType === "random") {
+        switch (this.field.range.content.api) {
+          case "fullName":
+            return faker.name.findName();
+          case "email":
+            return faker.internet.email();
+          case "city":
+            return faker.address.city();
+          case "department":
+            return faker.commerce.department();
+          case "company":
+            return faker.company.companyName();
+        }
       } else {
         let fromTimeInMinutes;
         let toTimeInMinutes;
@@ -190,7 +206,7 @@ export default {
       }
     },
     fetchRandom() {
-      console.log(faker.commerce.product());
+      console.log(faker.name.findName());
     },
   },
 };
