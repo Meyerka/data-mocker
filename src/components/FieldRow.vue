@@ -56,10 +56,14 @@
     <td v-for="checkbox in checkboxes" :key="checkbox">
       <input type="checkbox" v-model="isGrouped" />
     </td>
+    <td>
+      <button @click="fetchRandom()">test api</button>
+    </td>
   </tr>
 </template>
 
 <script>
+import faker from "faker";
 export default {
   name: "FieldRow",
   props: {
@@ -185,7 +189,9 @@ export default {
         }
       }
     },
-    fetchRandomFromApi() {},
+    fetchRandom() {
+      console.log(faker.commerce.product());
+    },
   },
 };
 </script>
