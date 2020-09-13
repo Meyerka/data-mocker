@@ -49,7 +49,6 @@
       </select>
     </div>
 
-    <button @click="generateGrid()">Generate grid</button>
     <button @click="downloadCsv()">Generate csv file</button>
   </div>
 </template>
@@ -77,7 +76,8 @@ export default {
     updateGrid(records) {
       this.dataGrid.push(records);
     },
-    downloadCsv() {
+    async downloadCsv() {
+      await this.generateGrid();
       let csvContent = "data:text/csv;charset=utf-8,";
       const sep = this.fieldSeparator;
       if (this.isHeaderIncluded) {
@@ -87,7 +87,6 @@ export default {
         csvContent = csvContent.substring(0, csvContent.length - 1);
         csvContent += "\r\n";
       }
-
       for (let row = 0; row < this.rowNumber; row++) {
         this.dataGrid.forEach(function (field) {
           csvContent += field.values[row] + sep;
@@ -95,13 +94,12 @@ export default {
         csvContent = csvContent.substring(0, csvContent.length - 1);
         csvContent += "\r\n";
       }
-
       let encodedUri = encodeURI(csvContent);
       var link = document.createElement("a");
       link.setAttribute("href", encodedUri);
       link.setAttribute("download", `${this.fileName}.${this.fileExtension}`);
       document.body.appendChild(link);
-
+      console.log("must before");
       link.click();
     },
     generateGrid() {
@@ -128,13 +126,11 @@ export default {
       this.$refs.child[0].field.range.type = "range";
       this.$refs.child[0].field.range.content.from = 0;
       this.$refs.child[0].field.range.content.to = 1000;
-
       this.$refs.child[1].field.name = "Nom";
       this.$refs.child[1].field.type = "text";
       this.$refs.child[1].field.range.type = "list";
       this.$refs.child[1].field.range.content.list =
         "Karl;Mathie;Jean;Marc;Pierre";
-
       this.$refs.child[2].field.name = "N° badge";
       this.$refs.child[2].field.type = "number";
       this.$refs.child[2].field.range.type = "range";
@@ -157,9 +153,7 @@ export default {
       //build mapping table to map unique key values to other fields' values
       let mappingTable = [];
       mappingTable.push([]);
-
       mappingTable[0].push(uniqueValues);
-
       const keyField = groupedFieldsKeys[0];
       for (let i = 1; i < groupedFieldsKeys.length; i++) {
         const fieldIndex = groupedFieldsKeys[i];
@@ -172,7 +166,6 @@ export default {
           );
         }
       }
-
       for (let row = 0; row < this.dataGrid[0].values.length; row++) {
         const lookUpValue = this.dataGrid[0].values[row];
         for (let j = 1; j < groupedFieldsKeys.length; j++) {
@@ -188,3 +181,4 @@ export default {
 
 <style>
 </style>
+
