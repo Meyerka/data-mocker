@@ -154,44 +154,10 @@ export default {
         return this.getValueFromList();
       } else if (rangeType === "random") {
         return this.getValueFromRandom(this.field.range.content.api);
-      } else {
-        let fromTimeInMinutes;
-        let toTimeInMinutes;
-        switch (type) {
-          case "date":
-            return this.getRandomDateBetween(
-              this.field.range.content.to,
-              this.field.range.content.from
-            );
-          case "number":
-            return Math.floor(
-              this.getRandomValueBetween(
-                this.field.range.content.from,
-                this.field.range.content.to
-              )
-            );
-          case "duration":
-            fromTimeInMinutes = this.hoursToMinutes(
-              this.field.range.content.from,
-              ":"
-            );
-            toTimeInMinutes = this.hoursToMinutes(
-              this.field.range.content.to,
-              ":"
-            );
-
-            return this.minutesToHours(
-              Math.floor(
-                this.getRandomValueBetween(fromTimeInMinutes, toTimeInMinutes)
-              ),
-              ":"
-            );
-
-          default:
-            console.log("failed to generate random value based on the input");
-            break;
-        }
+      } else if (rangeType === "range") {
+        return this.getValueFromRange(type);
       }
+      console.log("failed to generate random value based on the input");
     },
     getValueFromList() {
       const valuesFromList = this.field.range.content.list.split(";");
@@ -215,6 +181,43 @@ export default {
           return faker.name.lastName();
         case "job":
           return faker.name.jobTitle();
+      }
+    },
+    getValueFromRange(rangeType) {
+      let fromTimeInMinutes;
+      let toTimeInMinutes;
+      switch (rangeType) {
+        case "date":
+          return this.getRandomDateBetween(
+            this.field.range.content.to,
+            this.field.range.content.from
+          );
+        case "number":
+          return Math.floor(
+            this.getRandomValueBetween(
+              this.field.range.content.from,
+              this.field.range.content.to
+            )
+          );
+        case "duration":
+          fromTimeInMinutes = this.hoursToMinutes(
+            this.field.range.content.from,
+            ":"
+          );
+          toTimeInMinutes = this.hoursToMinutes(
+            this.field.range.content.to,
+            ":"
+          );
+
+          return this.minutesToHours(
+            Math.floor(
+              this.getRandomValueBetween(fromTimeInMinutes, toTimeInMinutes)
+            ),
+            ":"
+          );
+
+        default:
+          break;
       }
     },
   },
