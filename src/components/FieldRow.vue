@@ -151,29 +151,9 @@ export default {
 
     generateValue(type, rangeType) {
       if (rangeType === "list") {
-        let valuesFromList = this.field.range.content.list.split(";");
-        return valuesFromList[
-          Math.floor(Math.random() * valuesFromList.length)
-        ];
+        return this.getValueFromList();
       } else if (rangeType === "random") {
-        switch (this.field.range.content.api) {
-          case "fullName":
-            return faker.name.findName();
-          case "email":
-            return faker.internet.email();
-          case "city":
-            return faker.address.city();
-          case "department":
-            return faker.commerce.department();
-          case "company":
-            return faker.company.companyName();
-          case "firstName":
-            return faker.name.firstName();
-          case "lastName":
-            return faker.name.lastName();
-          case "job":
-            return faker.name.jobTitle();
-        }
+        return this.getValueFromRandom(this.field.range.content.api);
       } else {
         let fromTimeInMinutes;
         let toTimeInMinutes;
@@ -213,8 +193,29 @@ export default {
         }
       }
     },
-    fetchRandom() {
-      console.log(faker.name.findName());
+    getValueFromList() {
+      const valuesFromList = this.field.range.content.list.split(";");
+      return valuesFromList[Math.floor(Math.random() * valuesFromList.length)];
+    },
+    getValueFromRandom(fieldToRandomize) {
+      switch (fieldToRandomize) {
+        case "fullName":
+          return faker.name.findName();
+        case "email":
+          return faker.internet.email();
+        case "city":
+          return faker.address.city();
+        case "department":
+          return faker.commerce.department();
+        case "company":
+          return faker.company.companyName();
+        case "firstName":
+          return faker.name.firstName();
+        case "lastName":
+          return faker.name.lastName();
+        case "job":
+          return faker.name.jobTitle();
+      }
     },
   },
 };
