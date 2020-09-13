@@ -51,6 +51,8 @@
         <option value="department">Department</option>
         <option value="company">Company</option>
         <option value="job">Job</option>
+        <option value="firstName">First Name</option>
+        <option value="lastName">Last Name</option>
       </select>
     </td>
     <td>
@@ -165,6 +167,12 @@ export default {
             return faker.commerce.department();
           case "company":
             return faker.company.companyName();
+          case "firstName":
+            return faker.name.firstName();
+          case "lastName":
+            return faker.name.lastName();
+          case "job":
+            return faker.name.jobTitle();
         }
       } else {
         let fromTimeInMinutes;
