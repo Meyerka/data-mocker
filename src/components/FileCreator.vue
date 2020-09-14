@@ -76,10 +76,11 @@ export default {
     updateGrid(records) {
       this.dataGrid.push(records);
     },
-    async downloadCsv() {
-      await this.generateGrid();
+    downloadCsv() {
+      this.generateGrid();
       let csvContent = "data:text/csv;charset=utf-8,";
       const sep = this.fieldSeparator;
+
       if (this.isHeaderIncluded) {
         this.dataGrid.forEach(function (field) {
           csvContent += field.name + sep;
@@ -99,14 +100,13 @@ export default {
       link.setAttribute("href", encodedUri);
       link.setAttribute("download", `${this.fileName}.${this.fileExtension}`);
       document.body.appendChild(link);
-      console.log("must before");
       link.click();
     },
-    generateGrid() {
+    async generateGrid() {
       for (let i = 0; i < this.fieldNumber; i++) {
         this.$refs.child[i].generateObject();
       }
-      this.alignGroupedFields();
+      await this.alignGroupedFields();
     },
     validateFileName() {
       var rg1 = /^[^\\/:*?"<>|]+$/; // forbidden characters \ / : * ? " < > |
