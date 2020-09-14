@@ -2,10 +2,10 @@
   <div>
     <v-btn @click="seedData()" primary>Seed data for test</v-btn>
     <h1>Select fields</h1>
-    <v-btn @click="addField(-1)" class="mx-2" fab dark small color="primary">
+    <v-btn @click="addField(-1)" class="mx-2" fab dark small color="error">
       <v-icon dark>mdi-minus</v-icon>
     </v-btn>
-    <v-btn @click="addField(1)" class="mx-2" fab dark small color="primary">
+    <v-btn @click="addField(1)" class="mx-2" fab dark small color="success">
       <v-icon dark>mdi-plus</v-icon>
     </v-btn>
     <table>

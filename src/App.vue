@@ -3,7 +3,9 @@
     <v-app-bar app color="primary" dark></v-app-bar>
 
     <v-main>
-      <FileCreator />
+      <v-container fluid>
+        <FileCreator />
+      </v-container>
     </v-main>
   </v-app>
 </template>
