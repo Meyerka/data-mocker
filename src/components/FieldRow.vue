@@ -4,16 +4,10 @@
       <v-text-field label="Field name" v-model="field.name"></v-text-field>
     </td>
     <td>
-      <select v-model="field.type">
-        <option value>--Type--</option>
-        <option value="text">Text</option>
-        <option value="date">Date</option>
-        <option value="number">Number</option>
-        <option value="duration">Duration</option>
-      </select>
+      <v-select :items="typeSelect" v-model="field.type" label="Type"></v-select>
     </td>
     <td>
-      <v-select :items="rangeTypeSelect" v-model="field.range.type" label="Standard"></v-select>
+      <v-select :items="rangeTypeSelect" v-model="field.range.type" label="Range type"></v-select>
     </td>
     <td>
       <div v-if="field.type === 'date' && field.range.type === 'range'" id="dateRange">
@@ -82,30 +76,28 @@ export default {
     records: { name: "", values: [] },
     checkboxes: 1,
     isGrouped: false,
-    rangeSelect: [
-      { text: "Random", value: "random" },
-      { text: "List", value: "list" },
+    typeSelect: [
+      { text: "Text", value: "text" },
+      { text: "Date", value: "date" },
+      { text: "Number", value: "number" },
+      { text: "Duration", value: "duration" },
     ],
   }),
   computed: {
     rangeTypeSelect: function () {
-      if (
-        this.field.type === "date" ||
-        this.field.type === "number" ||
-        this.field.type === "duration"
-      ) {
-        return [
-          { text: "Random", value: "random" },
-          { text: "List", value: "list" },
-          { text: "Range", value: "range" },
-        ];
-      } else {
-        return [
-          { text: "Random", value: "random" },
-          { text: "List", value: "list" },
-          { text: "Range", value: "range", disabled: "true" },
-        ];
-      }
+      return [
+        { text: "Random", value: "random" },
+        { text: "List", value: "list" },
+        {
+          text: "Range",
+          value: "range",
+          disabled: !(
+            this.field.type === "date" ||
+            this.field.type === "number" ||
+            this.field.type === "duration"
+          ),
+        },
+      ];
     },
   },
   methods: {
