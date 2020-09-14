@@ -61,9 +61,6 @@
     <td v-for="checkbox in checkboxes" :key="checkbox">
       <input type="checkbox" v-model="isGrouped" />
     </td>
-    <td>
-      <button @click="fetchRandom()">test api</button>
-    </td>
   </tr>
 </template>
 
