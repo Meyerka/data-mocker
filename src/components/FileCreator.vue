@@ -1,9 +1,13 @@
 <template>
   <div>
-    <button @click="seedData()">Seed data for test</button>
+    <v-btn @click="seedData()" primary>Seed data for test</v-btn>
     <h1>Select fields</h1>
-    <button @click="addField(1)">+</button>
-    <button @click="addField(-1)">-</button>
+    <v-btn @click="addField(-1)" class="mx-2" fab dark small color="primary">
+      <v-icon dark>mdi-minus</v-icon>
+    </v-btn>
+    <v-btn @click="addField(1)" class="mx-2" fab dark small color="primary">
+      <v-icon dark>mdi-plus</v-icon>
+    </v-btn>
     <table>
       <thead>
         <tr>

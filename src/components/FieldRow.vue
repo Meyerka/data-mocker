@@ -1,7 +1,7 @@
 <template>
   <tr>
     <td>
-      <input type="text" v-model="field.name" />
+      <v-text-field label="Field name" v-model="field.name"></v-text-field>
     </td>
     <td>
       <select v-model="field.type">
