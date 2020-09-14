@@ -28,7 +28,15 @@
         And
         <input type="number" name="to" v-model="field.range.content.to" />
       </div>
-      <input type="text" v-model="field.range.content.list" v-else-if="field.range.type === 'list'" />
+      <v-combobox
+        v-else-if="field.range.type === 'list'"
+        v-model="field.range.content.list"
+        :chips="field.range.content.list"
+        clearable
+        label="List of items"
+        multiple
+        solo
+      ></v-combobox>
       <v-select
         v-else-if="field.range.type === 'random'"
         :items="datasetSelect"
@@ -63,7 +71,7 @@ export default {
         content: {
           from: "",
           to: "",
-          list: "",
+          list: [],
           api: "",
         },
       },
@@ -172,8 +180,8 @@ export default {
       console.log("failed to generate random value based on the input");
     },
     getValueFromList() {
-      const valuesFromList = this.field.range.content.list.split(";");
-      return valuesFromList[Math.floor(Math.random() * valuesFromList.length)];
+      const list = this.field.range.content.list;
+      return list[Math.floor(Math.random() * list.length)];
     },
     getValueFromRandom(fieldToRandomize) {
       switch (fieldToRandomize) {
