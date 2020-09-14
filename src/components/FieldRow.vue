@@ -29,17 +29,13 @@
         <input type="number" name="to" v-model="field.range.content.to" />
       </div>
       <input type="text" v-model="field.range.content.list" v-else-if="field.range.type === 'list'" />
-      <select v-model="field.range.content.api" v-else-if="field.range.type === 'random'">
-        <option value>--Dataset--</option>
-        <option value="fullName">Full Name</option>
-        <option value="email">E-mail address</option>
-        <option value="city">City</option>
-        <option value="department">Department</option>
-        <option value="company">Company</option>
-        <option value="job">Job</option>
-        <option value="firstName">First Name</option>
-        <option value="lastName">Last Name</option>
-      </select>
+      <v-select
+        v-else-if="field.range.type === 'random'"
+        :items="datasetSelect"
+        v-model="field.range.content.api"
+        label="Dataset"
+        append-icon="mdi-book-search"
+      ></v-select>
     </td>
     <td>
       <input type="range" min="0" max="100" value="50" v-model="field.unicity" />
@@ -81,6 +77,16 @@ export default {
       { text: "Date", value: "date" },
       { text: "Number", value: "number" },
       { text: "Duration", value: "duration" },
+    ],
+    datasetSelect: [
+      { text: "Full Name", value: "fullName" },
+      { text: "Last Name", value: "lastName" },
+      { text: "First Name", value: "firstName" },
+      { text: "Email address", value: "email" },
+      { text: "Company", value: "company" },
+      { text: "Department", value: "department" },
+      { text: "Job", value: "job" },
+      { text: "City", value: "city" },
     ],
   }),
   computed: {
