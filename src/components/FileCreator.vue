@@ -19,31 +19,20 @@
     </div>
 
     <div>
-      Nom du fichier
-      <input type="text" v-model="fileName" @keyup="validateFileName" />
-      <select v-model="fileExtension">
-        <option value="csv">.csv</option>
-        <option value="txt">.txt</option>
-      </select>
+      <v-text-field label="File name" v-model="fileName" @keyup="validateFileName"></v-text-field>
+      <v-select :items="fileExtensionSelect" v-model="fileExtension" label="File extension"></v-select>
     </div>
     <div>
-      Number of rows
-      <input type="number" v-model="rowNumber" />
+      <v-text-field label="Number of rows" type="number" v-model="rowNumber"></v-text-field>
     </div>
 
     <div>
-      Include header
-      <input type="checkbox" v-model="isHeaderIncluded" />
+      <v-checkbox v-model="isHeaderIncluded" label="Include header" />
     </div>
     <div>
-      Field seperator
-      <select v-model="fieldSeparator">
-        <option value=";">Semicolon ;</option>
-        <option value=",">Comma ,</option>
-      </select>
+      <v-select :items="fieldSelect" v-model="fieldSeparator" label="Field seperator"></v-select>
     </div>
-
-    <button @click="downloadCsv()">Generate csv file</button>
+    <v-btn @click="downloadCsv()" primary>Generate file</v-btn>
   </div>
 </template>
 
@@ -62,6 +51,15 @@ export default {
     fileExtension: "csv",
     isHeaderIncluded: true,
     fieldSeparator: ";",
+    fieldSelect: [
+      { text: "Semicolon ;", value: ";" },
+      { text: "Comma ,", value: "," },
+      { text: "Tab", value: " " },
+    ],
+    fileExtensionSelect: [
+      { text: ".txt", value: "txt" },
+      { text: ".csv", value: "csv" },
+    ],
   }),
   methods: {
     addField(number) {

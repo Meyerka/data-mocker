@@ -60,7 +60,7 @@
           <v-text-field label="From" type="time" v-model="field.range.content.to"></v-text-field>
         </div>
         <div v-else-if="field.type === 'number' && field.range.type === 'range'" id="numberRange">
-          <v-text-field label="From" type="number" v-model="field.range.content.from"></v-text-field>And
+          <v-text-field label="From" type="number" v-model="field.range.content.from"></v-text-field>
           <v-text-field label="To" type="number" v-model="field.range.content.to"></v-text-field>
         </div>
         <v-combobox
