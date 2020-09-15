@@ -1,5 +1,5 @@
 <template>
-  <v-row no-gutters>
+  <v-row>
     <v-col cols="1" v-for="checkbox in checkboxes" :key="checkbox">
       <v-checkbox v-model="isGrouped" label="Group" />
     </v-col>
@@ -13,7 +13,7 @@
       <v-select :items="rangeTypeSelect" v-model="field.range.type" label="Range type"></v-select>
     </v-col>
     <v-col cols="4">
-      <div v-if="field.type === 'date' && field.range.type === 'range'" id="dateRange">
+      <v-row v-if="field.type === 'date' && field.range.type === 'range'">
         <v-menu
           v-model="menu2"
           :close-on-content-click="false"
@@ -53,15 +53,20 @@
           </template>
           <v-date-picker v-model="field.range.content.to" @input="menu3 = false"></v-date-picker>
         </v-menu>
-      </div>
-      <div v-else-if="field.type === 'duration' && field.range.type === 'range'" id="dateRange">
-        <v-text-field label="From" type="time" v-model="field.range.content.from"></v-text-field>And
+      </v-row>
+
+      <v-row v-else-if="field.type === 'duration' && field.range.type === 'range'" id="dateRange">
+        <v-text-field label="From" type="time" v-model="field.range.content.from"></v-text-field>
         <v-text-field label="From" type="time" v-model="field.range.content.to"></v-text-field>
-      </div>
-      <div v-else-if="field.type === 'number' && field.range.type === 'range'" id="numberRange">
+      </v-row>
+      <v-row
+        no-gutter
+        v-else-if="field.type === 'number' && field.range.type === 'range'"
+        id="numberRange"
+      >
         <v-text-field label="From" type="number" v-model="field.range.content.from"></v-text-field>
         <v-text-field label="To" type="number" v-model="field.range.content.to"></v-text-field>
-      </div>
+      </v-row>
       <v-combobox
         v-else-if="field.range.type === 'list'"
         v-model="field.range.content.list"
