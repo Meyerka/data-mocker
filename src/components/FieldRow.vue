@@ -1,57 +1,67 @@
 <template>
-  <tr>
-    <td>
-      <v-text-field label="Field name" v-model="field.name"></v-text-field>
-    </td>
-    <td>
-      <v-select :items="typeSelect" v-model="field.type" label="Type"></v-select>
-    </td>
-    <td>
-      <v-select :items="rangeTypeSelect" v-model="field.range.type" label="Range type"></v-select>
-    </td>
-    <td>
-      <div v-if="field.type === 'date' && field.range.type === 'range'" id="dateRange">
-        From
-        <input type="date" name="from" v-model="field.range.content.from" />
-        To
-        <input type="date" name="to" v-model="field.range.content.to" />
-      </div>
-      <div v-else-if="field.type === 'duration' && field.range.type === 'range'" id="dateRange">
-        Between
-        <input type="time" name="from" v-model="field.range.content.from" />
-        And
-        <input type="time" name="to" v-model="field.range.content.to" />
-      </div>
-      <div v-else-if="field.type === 'number' && field.range.type === 'range'" id="numberRange">
-        Between
-        <input type="number" name="from" v-model="field.range.content.from" />
-        And
-        <input type="number" name="to" v-model="field.range.content.to" />
-      </div>
-      <v-combobox
-        v-else-if="field.range.type === 'list'"
-        v-model="field.range.content.list"
-        :chips="field.range.content.list"
-        clearable
-        label="List of items"
-        multiple
-        solo
-      ></v-combobox>
-      <v-select
-        v-else-if="field.range.type === 'random'"
-        :items="datasetSelect"
-        v-model="field.range.content.api"
-        label="Dataset"
-        append-icon="mdi-book-search"
-      ></v-select>
-    </td>
-    <td>
-      <input type="range" min="0" max="100" value="50" v-model="field.unicity" />
-    </td>
-    <td v-for="checkbox in checkboxes" :key="checkbox">
-      <input type="checkbox" v-model="isGrouped" />
-    </td>
-  </tr>
+  <v-container fluid>
+    <v-row>
+      <v-col cols="1">
+        <v-text-field label="Field name" v-model="field.name"></v-text-field>
+      </v-col>
+      <v-col cols="1">
+        <v-select :items="typeSelect" v-model="field.type" label="Type"></v-select>
+      </v-col>
+      <v-col cols="1">
+        <v-select :items="rangeTypeSelect" v-model="field.range.type" label="Range type"></v-select>
+      </v-col>
+      <v-col cols="3">
+        <div v-if="field.type === 'date' && field.range.type === 'range'" id="dateRange">
+          From
+          <input type="date" name="from" v-model="field.range.content.from" />
+          To
+          <input type="date" name="to" v-model="field.range.content.to" />
+        </div>
+        <div v-else-if="field.type === 'duration' && field.range.type === 'range'" id="dateRange">
+          Between
+          <input type="time" name="from" v-model="field.range.content.from" />
+          And
+          <input type="time" name="to" v-model="field.range.content.to" />
+        </div>
+        <div v-else-if="field.type === 'number' && field.range.type === 'range'" id="numberRange">
+          Between
+          <input type="number" name="from" v-model="field.range.content.from" />
+          And
+          <input type="number" name="to" v-model="field.range.content.to" />
+        </div>
+        <v-combobox
+          v-else-if="field.range.type === 'list'"
+          v-model="field.range.content.list"
+          :chips="field.range.content.list"
+          clearable
+          label="List of items"
+          multiple
+          solo
+        ></v-combobox>
+        <v-select
+          v-else-if="field.range.type === 'random'"
+          :items="datasetSelect"
+          v-model="field.range.content.api"
+          label="Dataset"
+          append-icon="mdi-book-search"
+        ></v-select>
+      </v-col>
+
+      <v-col cols="2">
+        <v-slider
+          v-model="field.unicity"
+          color="orange"
+          label="Unicity"
+          min="0"
+          max="100"
+          thumb-label
+        ></v-slider>
+      </v-col>
+      <v-col cols="12" sm="6" v-for="checkbox in checkboxes" :key="checkbox">
+        <input type="checkbox" v-model="isGrouped" />
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>

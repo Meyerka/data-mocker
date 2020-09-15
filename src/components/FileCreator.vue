@@ -8,26 +8,16 @@
     <v-btn @click="addField(1)" class="mx-2" fab dark small color="success">
       <v-icon dark>mdi-plus</v-icon>
     </v-btn>
-    <table>
-      <thead>
-        <tr>
-          <th>Field name</th>
-          <th>Type</th>
-          <th>Range type</th>
-          <th>Range content</th>
-          <th>Unicity</th>
-          <th>Group</th>
-        </tr>
-      </thead>
-      <tbody v-for="field in fieldNumber" :key="field">
-        <FieldRow
-          v-model="dataGrid"
-          :rowNumber="parseInt(rowNumber)"
-          @update-records="updateGrid"
-          ref="child"
-        />
-      </tbody>
-    </table>
+
+    <div v-for="field in fieldNumber" :key="field">
+      <FieldRow
+        v-model="dataGrid"
+        :rowNumber="parseInt(rowNumber)"
+        @update-records="updateGrid"
+        ref="child"
+      />
+    </div>
+
     <div>
       Nom du fichier
       <input type="text" v-model="fileName" @keyup="validateFileName" />
