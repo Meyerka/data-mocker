@@ -1,102 +1,100 @@
 <template>
-  <v-container fluid>
-    <v-row>
-      <v-col cols="1" v-for="checkbox in checkboxes" :key="checkbox">
-        <v-checkbox v-model="isGrouped" label="Group" />
-      </v-col>
-      <v-col cols="1">
-        <v-text-field label="Field name" v-model="field.name"></v-text-field>
-      </v-col>
-      <v-col cols="1">
-        <v-select :items="typeSelect" v-model="field.type" label="Type"></v-select>
-      </v-col>
-      <v-col cols="1">
-        <v-select :items="rangeTypeSelect" v-model="field.range.type" label="Range type"></v-select>
-      </v-col>
-      <v-col cols="4">
-        <div v-if="field.type === 'date' && field.range.type === 'range'" id="dateRange">
-          <v-menu
-            v-model="menu2"
-            :close-on-content-click="false"
-            :nudge-right="40"
-            transition="scale-transition"
-            offset-y
-            min-width="290px"
-          >
-            <template v-slot:activator="{ on, attrs }">
-              <v-text-field
-                v-model="field.range.content.from"
-                label="From"
-                readonly
-                v-bind="attrs"
-                v-on="on"
-              ></v-text-field>
-            </template>
-            <v-date-picker v-model="field.range.content.from" @input="menu2 = false"></v-date-picker>
-          </v-menu>
+  <v-row no-gutters>
+    <v-col cols="1" v-for="checkbox in checkboxes" :key="checkbox">
+      <v-checkbox v-model="isGrouped" label="Group" />
+    </v-col>
+    <v-col cols="1">
+      <v-text-field label="Field name" v-model="field.name"></v-text-field>
+    </v-col>
+    <v-col cols="1">
+      <v-select :items="typeSelect" v-model="field.type" label="Type"></v-select>
+    </v-col>
+    <v-col cols="1">
+      <v-select :items="rangeTypeSelect" v-model="field.range.type" label="Range type"></v-select>
+    </v-col>
+    <v-col cols="4">
+      <div v-if="field.type === 'date' && field.range.type === 'range'" id="dateRange">
+        <v-menu
+          v-model="menu2"
+          :close-on-content-click="false"
+          :nudge-right="40"
+          transition="scale-transition"
+          offset-y
+          min-width="290px"
+        >
+          <template v-slot:activator="{ on, attrs }">
+            <v-text-field
+              v-model="field.range.content.from"
+              label="From"
+              readonly
+              v-bind="attrs"
+              v-on="on"
+            ></v-text-field>
+          </template>
+          <v-date-picker v-model="field.range.content.from" @input="menu2 = false"></v-date-picker>
+        </v-menu>
 
-          <v-menu
-            v-model="menu3"
-            :close-on-content-click="false"
-            :nudge-right="40"
-            transition="scale-transition"
-            offset-y
-            min-width="290px"
-          >
-            <template v-slot:activator="{ on, attrs }">
-              <v-text-field
-                v-model="field.range.content.to"
-                label="To"
-                readonly
-                v-bind="attrs"
-                v-on="on"
-              ></v-text-field>
-            </template>
-            <v-date-picker v-model="field.range.content.to" @input="menu3 = false"></v-date-picker>
-          </v-menu>
-        </div>
-        <div v-else-if="field.type === 'duration' && field.range.type === 'range'" id="dateRange">
-          <v-text-field label="From" type="time" v-model="field.range.content.from"></v-text-field>And
-          <v-text-field label="From" type="time" v-model="field.range.content.to"></v-text-field>
-        </div>
-        <div v-else-if="field.type === 'number' && field.range.type === 'range'" id="numberRange">
-          <v-text-field label="From" type="number" v-model="field.range.content.from"></v-text-field>
-          <v-text-field label="To" type="number" v-model="field.range.content.to"></v-text-field>
-        </div>
-        <v-combobox
-          v-else-if="field.range.type === 'list'"
-          v-model="field.range.content.list"
-          :chips="field.range.content.list"
-          clearable
-          label="List of items"
-          multiple
-          solo
-        ></v-combobox>
-        <v-select
-          v-else-if="field.range.type === 'random'"
-          :items="datasetSelect"
-          v-model="field.range.content.api"
-          label="Dataset"
-          append-icon="mdi-book-search"
-        ></v-select>
-      </v-col>
+        <v-menu
+          v-model="menu3"
+          :close-on-content-click="false"
+          :nudge-right="40"
+          transition="scale-transition"
+          offset-y
+          min-width="290px"
+        >
+          <template v-slot:activator="{ on, attrs }">
+            <v-text-field
+              v-model="field.range.content.to"
+              label="To"
+              readonly
+              v-bind="attrs"
+              v-on="on"
+            ></v-text-field>
+          </template>
+          <v-date-picker v-model="field.range.content.to" @input="menu3 = false"></v-date-picker>
+        </v-menu>
+      </div>
+      <div v-else-if="field.type === 'duration' && field.range.type === 'range'" id="dateRange">
+        <v-text-field label="From" type="time" v-model="field.range.content.from"></v-text-field>And
+        <v-text-field label="From" type="time" v-model="field.range.content.to"></v-text-field>
+      </div>
+      <div v-else-if="field.type === 'number' && field.range.type === 'range'" id="numberRange">
+        <v-text-field label="From" type="number" v-model="field.range.content.from"></v-text-field>
+        <v-text-field label="To" type="number" v-model="field.range.content.to"></v-text-field>
+      </div>
+      <v-combobox
+        v-else-if="field.range.type === 'list'"
+        v-model="field.range.content.list"
+        :chips="field.range.content.list"
+        clearable
+        label="List of items"
+        multiple
+        solo
+      ></v-combobox>
+      <v-select
+        v-else-if="field.range.type === 'random'"
+        :items="datasetSelect"
+        v-model="field.range.content.api"
+        label="Dataset"
+        append-icon="mdi-book-search"
+      ></v-select>
+    </v-col>
 
-      <v-col cols="2">
-        <v-card flat color="transparent">
-          <v-card-text>
-            <v-slider
-              v-model="field.unicity"
-              color="orange"
-              min="0"
-              max="100"
-              label="Unicity"
-              thumb-label
-            ></v-slider>
-          </v-card-text>
-        </v-card>
-      </v-col>
-    </v-row>
-  </v-container>
+    <v-col cols="2">
+      <v-card flat color="transparent">
+        <v-card-text>
+          <v-slider
+            v-model="field.unicity"
+            color="orange"
+            min="0"
+            max="100"
+            label="Unicity"
+            thumb-label
+          ></v-slider>
+        </v-card-text>
+      </v-card>
+    </v-col>
+  </v-row>
 </template>
 
 <script>

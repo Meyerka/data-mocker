@@ -8,15 +8,14 @@
     <v-btn @click="addField(1)" class="mx-2" fab dark small color="success">
       <v-icon dark>mdi-plus</v-icon>
     </v-btn>
-
-    <div v-for="field in fieldNumber" :key="field">
+    <v-container fluid v-for="field in fieldNumber" :key="field">
       <FieldRow
         v-model="dataGrid"
         :rowNumber="parseInt(rowNumber)"
         @update-records="updateGrid"
         ref="child"
       />
-    </div>
+    </v-container>
 
     <div>
       <v-text-field label="File name" v-model="fileName" @keyup="validateFileName"></v-text-field>
@@ -177,5 +176,8 @@ export default {
 </script>
 
 <style>
+.container {
+  height: 4rem;
+}
 </style>
 
