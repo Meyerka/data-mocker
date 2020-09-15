@@ -14,7 +14,7 @@
         <v-select :items="rangeTypeSelect" v-model="field.range.type" label="Range type"></v-select>
       </v-col>
       <v-col cols="4">
-        <span v-if="field.type === 'date' && field.range.type === 'range'" id="dateRange">
+        <div v-if="field.type === 'date' && field.range.type === 'range'" id="dateRange">
           <v-menu
             v-model="menu2"
             :close-on-content-click="false"
@@ -54,20 +54,14 @@
             </template>
             <v-date-picker v-model="field.range.content.to" @input="menu3 = false"></v-date-picker>
           </v-menu>
-
-          <!-- <input type="date" name="to" v-model="field.range.content.to" /> -->
-        </span>
+        </div>
         <div v-else-if="field.type === 'duration' && field.range.type === 'range'" id="dateRange">
-          Between
-          <input type="time" name="from" v-model="field.range.content.from" />
-          And
-          <input type="time" name="to" v-model="field.range.content.to" />
+          <v-text-field label="From" type="time" v-model="field.range.content.from"></v-text-field>And
+          <v-text-field label="From" type="time" v-model="field.range.content.to"></v-text-field>
         </div>
         <div v-else-if="field.type === 'number' && field.range.type === 'range'" id="numberRange">
-          Between
-          <input type="number" name="from" v-model="field.range.content.from" />
-          And
-          <input type="number" name="to" v-model="field.range.content.to" />
+          <v-text-field label="From" type="number" v-model="field.range.content.from"></v-text-field>And
+          <v-text-field label="To" type="number" v-model="field.range.content.to"></v-text-field>
         </div>
         <v-combobox
           v-else-if="field.range.type === 'list'"
