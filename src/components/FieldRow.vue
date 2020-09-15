@@ -1,6 +1,9 @@
 <template>
   <v-container fluid>
     <v-row>
+      <v-col cols="1" v-for="checkbox in checkboxes" :key="checkbox">
+        <v-checkbox v-model="isGrouped" label="Group" />
+      </v-col>
       <v-col cols="1">
         <v-text-field label="Field name" v-model="field.name"></v-text-field>
       </v-col>
@@ -10,13 +13,50 @@
       <v-col cols="1">
         <v-select :items="rangeTypeSelect" v-model="field.range.type" label="Range type"></v-select>
       </v-col>
-      <v-col cols="3">
-        <div v-if="field.type === 'date' && field.range.type === 'range'" id="dateRange">
-          From
-          <input type="date" name="from" v-model="field.range.content.from" />
-          To
-          <input type="date" name="to" v-model="field.range.content.to" />
-        </div>
+      <v-col cols="4">
+        <span v-if="field.type === 'date' && field.range.type === 'range'" id="dateRange">
+          <v-menu
+            v-model="menu2"
+            :close-on-content-click="false"
+            :nudge-right="40"
+            transition="scale-transition"
+            offset-y
+            min-width="290px"
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <v-text-field
+                v-model="field.range.content.from"
+                label="From"
+                readonly
+                v-bind="attrs"
+                v-on="on"
+              ></v-text-field>
+            </template>
+            <v-date-picker v-model="field.range.content.from" @input="menu2 = false"></v-date-picker>
+          </v-menu>
+
+          <v-menu
+            v-model="menu3"
+            :close-on-content-click="false"
+            :nudge-right="40"
+            transition="scale-transition"
+            offset-y
+            min-width="290px"
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <v-text-field
+                v-model="field.range.content.to"
+                label="To"
+                readonly
+                v-bind="attrs"
+                v-on="on"
+              ></v-text-field>
+            </template>
+            <v-date-picker v-model="field.range.content.to" @input="menu3 = false"></v-date-picker>
+          </v-menu>
+
+          <!-- <input type="date" name="to" v-model="field.range.content.to" /> -->
+        </span>
         <div v-else-if="field.type === 'duration' && field.range.type === 'range'" id="dateRange">
           Between
           <input type="time" name="from" v-model="field.range.content.from" />
@@ -48,17 +88,18 @@
       </v-col>
 
       <v-col cols="2">
-        <v-slider
-          v-model="field.unicity"
-          color="orange"
-          label="Unicity"
-          min="0"
-          max="100"
-          thumb-label
-        ></v-slider>
-      </v-col>
-      <v-col cols="12" sm="6" v-for="checkbox in checkboxes" :key="checkbox">
-        <input type="checkbox" v-model="isGrouped" />
+        <v-card flat color="transparent">
+          <v-card-text>
+            <v-slider
+              v-model="field.unicity"
+              color="orange"
+              min="0"
+              max="100"
+              label="Unicity"
+              thumb-label
+            ></v-slider>
+          </v-card-text>
+        </v-card>
       </v-col>
     </v-row>
   </v-container>
