@@ -88,6 +88,7 @@ export default {
       }
       let encodedUri = encodeURI(csvContent);
       var link = document.createElement("a");
+      this.dataGrid = [];
       link.setAttribute("href", encodedUri);
       link.setAttribute("download", `${this.fileName}.${this.fileExtension}`);
       document.body.appendChild(link);
