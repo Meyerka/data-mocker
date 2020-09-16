@@ -37,6 +37,7 @@
 
 <script>
 import FieldRow from "./FieldRow.vue";
+
 export default {
   name: "FileCreator",
   components: {
