@@ -1,5 +1,6 @@
 <template>
   <div>
+    {{this.$store.state.count}}
     <v-btn @click="seedData()" primary>Seed data for test</v-btn>
     <h1>Select fields</h1>
     <v-btn @click="addField(-1)" class="mx-2" fab dark small color="error">

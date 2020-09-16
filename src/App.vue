@@ -15,7 +15,6 @@ import FileCreator from "./components/FileCreator";
 
 export default {
   name: "App",
-
   components: {
     FileCreator,
   },
