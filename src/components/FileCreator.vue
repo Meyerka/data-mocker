@@ -21,20 +21,28 @@
         </v-container>
       </v-col>
       <v-col cols="2">
-        <div>
-          <v-text-field label="File name" v-model="fileName" @keyup="validateFileName"></v-text-field>
-          <v-select :items="fileExtensionSelect" v-model="fileExtension" label="File extension"></v-select>
-        </div>
-        <div>
-          <v-text-field label="Number of rows" type="number" v-model="rowNumber"></v-text-field>
-        </div>
+        <v-row>
+          <v-col>
+            <v-text-field label="Number of rows" type="number" v-model="rowNumber"></v-text-field>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="8">
+            <v-select :items="fieldSelect" v-model="fieldSeparator" label="Field seperator"></v-select>
+          </v-col>
+          <v-col>
+            <v-checkbox v-model="isHeaderIncluded" persistent-hint hint="Include header" />
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="8">
+            <v-text-field label="File name" v-model="fileName" @keyup="validateFileName"></v-text-field>
+          </v-col>
+          <v-col cols="4">
+            <v-select :items="fileExtensionSelect" v-model="fileExtension" label="Extension"></v-select>
+          </v-col>
+        </v-row>
 
-        <div>
-          <v-checkbox v-model="isHeaderIncluded" label="Include header" />
-        </div>
-        <div>
-          <v-select :items="fieldSelect" v-model="fieldSeparator" label="Field seperator"></v-select>
-        </div>
         <v-btn @click="downloadCsv()" primary>Generate file</v-btn>
       </v-col>
     </v-row>
