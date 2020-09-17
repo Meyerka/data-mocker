@@ -1,7 +1,7 @@
 <template>
   <v-row>
     <v-col cols="1" v-for="checkbox in checkboxes" :key="checkbox">
-      <v-checkbox v-model="isGrouped" label="Group" />
+      <v-checkbox v-model="isGrouped" persistent-hint="true" hint="Group" />
     </v-col>
     <v-col cols="1">
       <v-text-field label="Field name" v-model="field.name"></v-text-field>
@@ -85,7 +85,7 @@
       ></v-select>
     </v-col>
 
-    <v-col cols="2">
+    <v-col>
       <v-card flat color="transparent">
         <v-card-text>
           <v-slider

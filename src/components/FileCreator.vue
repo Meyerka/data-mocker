@@ -1,37 +1,43 @@
 <template>
   <div>
-    <v-btn @click="seedData()" primary>Seed data for test</v-btn>
-    <h1>Select fields</h1>
-    <v-btn @click="addField(-1)" class="mx-2" fab dark small color="error">
-      <v-icon dark>mdi-minus</v-icon>
-    </v-btn>
-    <v-btn @click="addField(1)" class="mx-2" fab dark small color="success">
-      <v-icon dark>mdi-plus</v-icon>
-    </v-btn>
-    <v-container fluid v-for="field in fieldNumber" :key="field">
-      <FieldRow
-        v-model="dataGrid"
-        :rowNumber="parseInt(rowNumber)"
-        @update-records="updateGrid"
-        ref="child"
-      />
-    </v-container>
+    <v-row>
+      <v-btn @click="seedData()" primary>Seed data for test</v-btn>
+    </v-row>
+    <v-row>
+      <v-col cols="10">
+        <v-btn @click="addField(-1)" class="mx-2" fab dark small color="error">
+          <v-icon dark>mdi-minus</v-icon>
+        </v-btn>
+        <v-btn @click="addField(1)" class="mx-2" fab dark small color="success">
+          <v-icon dark>mdi-plus</v-icon>
+        </v-btn>
+        <v-container fluid v-for="field in fieldNumber" :key="field">
+          <FieldRow
+            v-model="dataGrid"
+            :rowNumber="parseInt(rowNumber)"
+            @update-records="updateGrid"
+            ref="child"
+          />
+        </v-container>
+      </v-col>
+      <v-col cols="2">
+        <div>
+          <v-text-field label="File name" v-model="fileName" @keyup="validateFileName"></v-text-field>
+          <v-select :items="fileExtensionSelect" v-model="fileExtension" label="File extension"></v-select>
+        </div>
+        <div>
+          <v-text-field label="Number of rows" type="number" v-model="rowNumber"></v-text-field>
+        </div>
 
-    <div>
-      <v-text-field label="File name" v-model="fileName" @keyup="validateFileName"></v-text-field>
-      <v-select :items="fileExtensionSelect" v-model="fileExtension" label="File extension"></v-select>
-    </div>
-    <div>
-      <v-text-field label="Number of rows" type="number" v-model="rowNumber"></v-text-field>
-    </div>
-
-    <div>
-      <v-checkbox v-model="isHeaderIncluded" label="Include header" />
-    </div>
-    <div>
-      <v-select :items="fieldSelect" v-model="fieldSeparator" label="Field seperator"></v-select>
-    </div>
-    <v-btn @click="downloadCsv()" primary>Generate file</v-btn>
+        <div>
+          <v-checkbox v-model="isHeaderIncluded" label="Include header" />
+        </div>
+        <div>
+          <v-select :items="fieldSelect" v-model="fieldSeparator" label="Field seperator"></v-select>
+        </div>
+        <v-btn @click="downloadCsv()" primary>Generate file</v-btn>
+      </v-col>
+    </v-row>
   </div>
 </template>
 
