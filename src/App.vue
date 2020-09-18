@@ -2,6 +2,11 @@
   <v-app>
     <v-app-bar app color="primary" dark>
       <HelpIcon />
+      <v-btn class="white--text" color="teal" @click="overlay = !overlay">Show Overlay</v-btn>
+
+      <v-overlay z-index="3" :value="overlay">
+        <v-btn class="white--text" color="teal" @click="overlay = false">Hide Overlay</v-btn>
+      </v-overlay>
     </v-app-bar>
 
     <v-main>
@@ -24,6 +29,7 @@ export default {
   },
 
   data: () => ({
+    overlay: false,
     //
   }),
 };
