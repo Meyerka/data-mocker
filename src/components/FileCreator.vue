@@ -4,7 +4,7 @@
       <v-btn @click="seedData()" primary>Seed data for test</v-btn>
     </v-row>
     <v-row>
-      <v-col cols="10">
+      <v-col cols="12" lg="10">
         <v-btn @click="addField(-1)" class="mx-2" fab dark small color="error">
           <v-icon dark>mdi-minus</v-icon>
         </v-btn>
@@ -20,7 +20,7 @@
           />
         </v-container>
       </v-col>
-      <v-col cols="2">
+      <v-col cols="12" lg="2">
         <v-row>
           <v-col>
             <v-text-field label="Number of rows" type="number" v-model="rowNumber"></v-text-field>
