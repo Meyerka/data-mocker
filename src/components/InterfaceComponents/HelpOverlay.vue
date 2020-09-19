@@ -30,6 +30,9 @@
 <script>
 export default {
   name: "HelpOverlay",
+  props: {
+    overlay: Boolean,
+  },
 };
 </script>
 

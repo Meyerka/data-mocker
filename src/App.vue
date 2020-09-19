@@ -5,7 +5,7 @@
     </v-app-bar>
 
     <v-main>
-      <HelpOverlay />
+      <HelpOverlay :overlay="overlay" />
       <v-container fluid>
         <FileCreator />
       </v-container>
@@ -25,7 +25,6 @@ export default {
 
   data: () => ({
     overlay: false,
-    //
   }),
 };
 </script>
