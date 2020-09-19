@@ -23,7 +23,6 @@
       You can group 2 or more fields to "pair" their values. It will ensure the set of values will be coherent throughout the file rows.
       <br />For example, pair first name, name, and employee number to make sure the trio will always be the same for a given name.
     </p>
-    <v-btn class="white--text" color="teal" @click="overlay = false">OK!</v-btn>
   </v-overlay>
 </template>
 
