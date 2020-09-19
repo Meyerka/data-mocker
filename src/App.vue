@@ -16,7 +16,7 @@
 
 <script>
 import FileCreator from "./components/FileCreator";
-import HelpOverlay from "./components/InterfaceComponents/HelpOverlay";
+import HelpOverlay from "./components/FileComponents/HelpOverlay";
 export default {
   name: "App",
   components: {

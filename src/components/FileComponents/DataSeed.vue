@@ -1,4 +1,6 @@
-<template></template>
+<template>
+  <v-btn @click="seedData()" primary>Seed data for test</v-btn>
+</template>
 
 <script>
 export default {

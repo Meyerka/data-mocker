@@ -1,9 +1,6 @@
 <template>
   <div>
     <v-row>
-      <v-btn @click="seedData()" primary>Seed data for test</v-btn>
-    </v-row>
-    <v-row>
       <v-col cols="12" lg="10">
         <v-btn @click="addField(-1)" class="mx-2" fab dark small color="error">
           <v-icon dark>mdi-minus</v-icon>
@@ -127,28 +124,7 @@ export default {
         alert("Forbidden character in file name");
       }
     },
-    seedData() {
-      this.$refs.child[0].field.name = "Matricule";
-      this.$refs.child[0].field.type = "number";
-      this.$refs.child[0].field.range.type = "range";
-      this.$refs.child[0].field.range.content.from = 0;
-      this.$refs.child[0].field.range.content.to = 1000;
-      this.$refs.child[1].field.name = "Nom";
-      this.$refs.child[1].field.type = "text";
-      this.$refs.child[1].field.range.type = "list";
-      this.$refs.child[1].field.range.content.list = [
-        "Karl",
-        "Mathie",
-        "Jean",
-        "Marc",
-        "Pierre",
-      ];
-      this.$refs.child[2].field.name = "N° badge";
-      this.$refs.child[2].field.type = "number";
-      this.$refs.child[2].field.range.type = "range";
-      this.$refs.child[2].field.range.content.from = 10000;
-      this.$refs.child[2].field.range.content.to = 1000000;
-    },
+
     // TODO - refactor this mess
     alignGroupedFields() {
       //build the list of field indexes to group
