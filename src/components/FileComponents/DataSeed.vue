@@ -5,7 +5,6 @@
 <script>
 export default {
   name: "DataSeed",
-
   methods: {
     seedData() {
       this.$refs.child[0].field.name = "Matricule";
