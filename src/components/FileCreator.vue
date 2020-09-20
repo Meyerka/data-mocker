@@ -70,6 +70,7 @@ export default {
     fileExtensionSelect: [
       { text: ".txt", value: "txt" },
       { text: ".csv", value: "csv" },
+      { text: ".json", value: "json" },
     ],
   }),
   methods: {
@@ -81,6 +82,24 @@ export default {
     },
     downloadCsv() {
       this.generateGrid();
+      let generatedFile;
+      this.fileExtension === "json"
+        ? (generatedFile = this.generateJSON())
+        : (generatedFile = this.generateCSV());
+      this.dataGrid = [];
+      let link = document.createElement("a");
+      link.setAttribute("href", generatedFile);
+      link.setAttribute("download", `${this.fileName}.${this.fileExtension}`);
+      document.body.appendChild(link);
+      link.click();
+    },
+    async generateGrid() {
+      for (let i = 0; i < this.fieldNumber; i++) {
+        this.$refs.child[i].generateObject();
+      }
+      await this.alignGroupedFields();
+    },
+    generateCSV() {
       let csvContent = "data:text/csv;charset=utf-8,";
       const sep = this.fieldSeparator;
 
@@ -98,19 +117,13 @@ export default {
         csvContent = csvContent.substring(0, csvContent.length - 1);
         csvContent += "\r\n";
       }
-      let encodedUri = encodeURI(csvContent);
-      var link = document.createElement("a");
-      this.dataGrid = [];
-      link.setAttribute("href", encodedUri);
-      link.setAttribute("download", `${this.fileName}.${this.fileExtension}`);
-      document.body.appendChild(link);
-      link.click();
+      return encodeURI(csvContent);
     },
-    async generateGrid() {
-      for (let i = 0; i < this.fieldNumber; i++) {
-        this.$refs.child[i].generateObject();
-      }
-      await this.alignGroupedFields();
+    generateJSON() {
+      return (
+        "data:text/json;charset=utf-8," +
+        encodeURIComponent(JSON.stringify(this.dataGrid))
+      );
     },
     validateFileName() {
       var rg1 = /^[^\\/:*?"<>|]+$/; // forbidden characters \ / : * ? " < > |
