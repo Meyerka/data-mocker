@@ -25,7 +25,12 @@
         </v-row>
         <v-row>
           <v-col cols="8">
-            <v-select :items="fieldSelect" v-model="fieldSeparator" label="Field seperator"></v-select>
+            <v-select
+              v-if="fileExtension!='json'"
+              :items="fieldSelect"
+              v-model="fieldSeparator"
+              label="Field seperator"
+            ></v-select>
           </v-col>
           <v-col>
             <v-checkbox v-model="isHeaderIncluded" persistent-hint hint="Include header" />
@@ -40,7 +45,7 @@
           </v-col>
         </v-row>
 
-        <v-btn @click="downloadCsv()" primary>Generate file</v-btn>
+        <v-btn @click="downloadFile()" primary>Generate file</v-btn>
       </v-col>
     </v-row>
   </div>
@@ -80,7 +85,7 @@ export default {
     updateGrid(records) {
       this.dataGrid.push(records);
     },
-    downloadCsv() {
+    downloadFile() {
       this.generateGrid();
       let generatedFile;
       this.fileExtension === "json"
