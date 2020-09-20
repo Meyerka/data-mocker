@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-app-bar app color="primary" dark>
-      <v-btn v-if="!overlay" class="white--text" color="teal" @click="overlay = !overlay">Show help</v-btn>
+      <v-btn v-if="!overlay" class="white--text" color="teal" @click="overlay = !overlay">Help</v-btn>
       <v-btn v-else class="white--text" color="red" @click="overlay = !overlay">Hide help</v-btn>
     </v-app-bar>
 

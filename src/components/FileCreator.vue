@@ -1,12 +1,12 @@
 <template>
-  <div>
+  <div class="ma-6">
     <v-alert
       :value="fileAlert"
       type="error"
       transition="scale-transition"
     >The file name you entered is not valid.</v-alert>
     <v-row>
-      <v-col cols="12" lg="10">
+      <v-col cols="12">
         <v-btn @click="addField(-1)" class="mx-2" fab dark small color="error">
           <v-icon dark>mdi-minus</v-icon>
         </v-btn>
@@ -22,35 +22,45 @@
           />
         </v-container>
       </v-col>
-      <v-col cols="12" lg="2">
-        <v-row>
-          <v-col>
-            <v-text-field label="Number of rows" type="number" v-model="rowNumber"></v-text-field>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols="8">
-            <v-select
-              v-if="fileExtension!='json'"
-              :items="fieldSelect"
-              v-model="fieldSeparator"
-              label="Field seperator"
-            ></v-select>
-          </v-col>
-          <v-col>
-            <v-checkbox v-model="isHeaderIncluded" persistent-hint hint="Include header" />
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols="8">
-            <v-text-field label="File name" v-model="fileName" @keyup="validateFileName"></v-text-field>
-          </v-col>
-          <v-col cols="4">
-            <v-select :items="fileExtensionSelect" v-model="fileExtension" label="Extension"></v-select>
-          </v-col>
-        </v-row>
+      <v-col cols="6">
+        <v-container>
+          <v-card>
+            <v-card-title class="primary dark">
+              <span class="headline white--text">File options</span>
 
-        <v-btn v-if="!fileAlert" @click="downloadFile()" primary>Generate file</v-btn>
+              <v-spacer></v-spacer>
+            </v-card-title>
+            <v-card-text>
+              <v-row>
+                <v-col>
+                  <v-text-field label="Number of rows" type="number" v-model="rowNumber"></v-text-field>
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col cols="8">
+                  <v-select
+                    v-if="fileExtension!='json'"
+                    :items="fieldSelect"
+                    v-model="fieldSeparator"
+                    label="Field seperator"
+                  ></v-select>
+                </v-col>
+                <v-col>
+                  <v-checkbox v-model="isHeaderIncluded" persistent-hint hint="Include header" />
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col cols="8">
+                  <v-text-field label="File name" v-model="fileName" @keyup="validateFileName"></v-text-field>
+                </v-col>
+                <v-col cols="4">
+                  <v-select :items="fileExtensionSelect" v-model="fileExtension" label="Extension"></v-select>
+                </v-col>
+              </v-row>
+              <v-btn v-if="!fileAlert" @click="downloadFile()" primary>Generate file</v-btn>
+            </v-card-text>
+          </v-card>
+        </v-container>
       </v-col>
     </v-row>
   </div>
