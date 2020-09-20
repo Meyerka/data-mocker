@@ -1,5 +1,10 @@
 <template>
   <div>
+    <v-alert
+      :value="fileAlert"
+      type="error"
+      transition="scale-transition"
+    >The file name you entered is not valid.</v-alert>
     <v-row>
       <v-col cols="12" lg="10">
         <v-btn @click="addField(-1)" class="mx-2" fab dark small color="error">
@@ -60,6 +65,7 @@ export default {
     FieldRow,
   },
   data: () => ({
+    fileAlert: false,
     fieldNumber: 3,
     dataGrid: [],
     rowNumber: 1,
@@ -78,6 +84,7 @@ export default {
       { text: ".json", value: "json" },
     ],
   }),
+
   methods: {
     addField(number) {
       this.fieldNumber += number;
@@ -139,7 +146,9 @@ export default {
         rg2.test(this.fileName) ||
         rg3.test(this.fileName)
       ) {
-        alert("Forbidden character in file name");
+        this.fileAlert = true;
+      } else {
+        this.fileAlert = false;
       }
     },
 
