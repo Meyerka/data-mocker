@@ -1,14 +1,13 @@
 <template>
   <v-app>
     <v-app-bar app color="primary" dark>
-      <v-btn
-        v-if="!overlay"
-        class="white--text"
-        color="teal"
-        @click="overlay = !overlay"
-        absolute
-        right
-      >Help</v-btn>
+      <v-toolbar-title>Data mocker</v-toolbar-title>
+      <v-spacer></v-spacer>
+
+      <a class="mx-6" href="https://github.com/Meyerka/data-mocker" target="_blank">
+        <v-img src="./assets/githubLogo.png"></v-img>
+      </a>
+      <v-btn v-if="!overlay" class="white--text" color="teal" @click="overlay = !overlay">Help</v-btn>
       <v-btn
         v-else
         class="white--text"
