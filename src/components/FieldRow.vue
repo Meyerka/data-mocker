@@ -3,7 +3,7 @@
     <v-col cols="1" v-for="checkbox in checkboxes" :key="checkbox">
       <v-checkbox v-model="isGrouped" persistent-hint hint="Group" />
     </v-col>
-    <v-col cols="1">
+    <v-col cols="2">
       <v-text-field label="Field name" v-model="field.name"></v-text-field>
     </v-col>
     <v-col cols="1">

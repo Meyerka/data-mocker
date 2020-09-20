@@ -5,25 +5,23 @@
       type="error"
       transition="scale-transition"
     >The file name you entered is not valid.</v-alert>
+    <v-btn @click="addField(-1)" class="mx-2" fab dark small color="error">
+      <v-icon dark>mdi-minus</v-icon>
+    </v-btn>
+    <v-btn @click="addField(1)" class="mx-2" fab dark small color="success">
+      <v-icon dark>mdi-plus</v-icon>
+    </v-btn>
+    <v-container fluid v-for="field in fieldNumber" :key="field" class="container">
+      <FieldRow
+        v-model="dataGrid"
+        :rowNumber="parseInt(rowNumber)"
+        @update-records="updateGrid"
+        ref="child"
+      />
+    </v-container>
     <v-row>
-      <v-col cols="12">
-        <v-btn @click="addField(-1)" class="mx-2" fab dark small color="error">
-          <v-icon dark>mdi-minus</v-icon>
-        </v-btn>
-        <v-btn @click="addField(1)" class="mx-2" fab dark small color="success">
-          <v-icon dark>mdi-plus</v-icon>
-        </v-btn>
-        <v-container fluid v-for="field in fieldNumber" :key="field">
-          <FieldRow
-            v-model="dataGrid"
-            :rowNumber="parseInt(rowNumber)"
-            @update-records="updateGrid"
-            ref="child"
-          />
-        </v-container>
-      </v-col>
       <v-col cols="6">
-        <v-container>
+        <v-container class="my-10">
           <v-card>
             <v-card-title class="primary dark">
               <span class="headline white--text">File options</span>
