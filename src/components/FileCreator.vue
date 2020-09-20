@@ -50,7 +50,7 @@
           </v-col>
         </v-row>
 
-        <v-btn @click="downloadFile()" primary>Generate file</v-btn>
+        <v-btn v-if="!fileAlert" @click="downloadFile()" primary>Generate file</v-btn>
       </v-col>
     </v-row>
   </div>
