@@ -57,7 +57,16 @@
                   <v-select :items="fileExtensionSelect" v-model="fileExtension" label="Extension"></v-select>
                 </v-col>
               </v-row>
-              <v-btn v-if="!fileAlert" @click="downloadFile()" primary>Generate file</v-btn>
+              <v-row>
+                <v-btn
+                  v-if="!fileAlert"
+                  @click="downloadFile()"
+                  color="primary"
+                  absolute
+                  right
+                  class="my-6"
+                >Generate file</v-btn>
+              </v-row>
             </v-card-text>
           </v-card>
         </v-container>
